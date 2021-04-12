@@ -12,7 +12,7 @@ const app = express();
 const connection=mysql.createConnection({
     host:'localhost',
     user:'root',
-    password:'',
+    password:'password',
     database:'node_crud'
 });
  
@@ -20,8 +20,33 @@ connection.connect(function(error){
     if(!!error) console.log('notconnected',(error));
     else console.log('Database Connected!');
 }); 
+
+//set views file
+app.set('views',path.join(__dirname,'views'));
+			
+//set view engine
+app.set('view engine', 'ejs');
+app.use(bodyParser.json());
+app.use(bodyParser.urlencoded({ extended: false }));
+
+//set views file
+app.set('views',path.join(__dirname,'views'));
+			
+//set view engine
+app.set('view engine', 'ejs');
+app.use(bodyParser.json());
+app.use(bodyParser.urlencoded({ extended: false }));
 app.get('/',(req,res)=>{
-    res.send('hii')
+    //res.send('hii')
+    let sql ='select * from tasktable';
+    let query= connection.query(sql,(err,rows)=>{
+       if(err)throw err; 
+       res.render('user_index',{
+        tittle:'curd',
+        // user:
+    })
+    
+    });
 });
 // Server Listening
 app.listen(3000, () => {
